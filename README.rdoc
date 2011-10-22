@@ -25,7 +25,7 @@ This creates the following files:
 
 == Running
 
-* Set up your Twitter credentials in +config/tweethose.yaml+.
+* Set up your Twitter credentials in +config/initializers/tweethose.rb+.
 * Set up the keywords you're interested in tracking in +config/initializers/tweethose.rb+. 
 * Set up the callbacks you want to run when new tweets arrive in +config/initializers/tweethose.rb+. 
 * Then run the daemon.
@@ -60,7 +60,7 @@ This creates the following files:
 
 === Twitter credentials
 
-To connect to Twitter you need to use a set of Twitter credentials. These can be put into the file +config/tweethose.yaml+.
+To connect to Twitter you need to use a set of Twitter credentials. These can be put into the file +config/initializers/tweethose.rb+.
 
 === What to track
 

@@ -1,5 +1,8 @@
 require 'tweethose'
 
+
+TweetHose::Config.username = 'username'
+TweetHose::Config.password = 'password'
 TweetHose::Config.track_keywords = Array['bieber']
 
 TweetHose::Config.on_new_tweet do |status|

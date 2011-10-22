@@ -4,6 +4,33 @@ module TweetHose
   # Configures TweetHose
   #
   class Config
+    ##
+    # Sets the Twitter username
+    #
+    def self.username=(username)
+      @username = username
+      end
+
+    ##
+    # Gets the username
+    #
+    def self.username
+      @username
+    end
+
+    ##
+    # Sets the Twitter password
+    #
+    def self.password=(password)
+      @password = password
+      end
+
+    ##
+    # Gets the password
+    #
+    def self.password
+      @password
+    end
 
     ##
     # Sets the keywords to track from Twitter.

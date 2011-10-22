@@ -33,8 +33,8 @@ module TweetHose
 
     def configure(config)
       TweetStream.configure do |c|
-        c.username = config['username']
-        c.password = config['password']
+        c.username = TweetHose::Config.username
+        c.password = TweetHose::Config.password
         c.auth_method = :basic
         c.parser = :yajl
       end

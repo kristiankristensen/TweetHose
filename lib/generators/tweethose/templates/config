@@ -1,0 +1,9 @@
+username: username
+password: password
+quiet: true
+dir_mode: script
+dir: ../log
+multiple: false
+backtrace: true
+monitor: false
+ontop: false

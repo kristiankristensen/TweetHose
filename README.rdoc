@@ -1,0 +1,104 @@
+= TweetHose
+
+TweetHose lets you easily generate a daemon that listens to the Twitter firehose. When keywords you're interested in appears, you can set up a callback. Should make it easy to create that Justin Bieber tracking app you've always wanted.
+
+== Installation
+
+  gem install tweethose
+
+or
+
+Retrieve the project from Github, and link to it in your Gemfile:
+  gem 'tweethose', :path => '/dir/to/tweethose'
+
+Generate the scripts used to run the TweetHose daemon
+  rails generate tweethose
+
+This creates the following files:
+  script/tweethose_ctl
+  script/tweethose_ctl
+  script/tweethose
+  script/tweethose
+  config/tweethose.yaml
+  config/initializers/tweethose.rb
+
+
+== Running
+
+* Set up your Twitter credentials in +config/tweethose.yaml+.
+* Set up the keywords you're interested in tracking in +config/initializers/tweethose.rb+. 
+* Set up the callbacks you want to run when new tweets arrive in +config/initializers/tweethose.rb+. 
+* Then run the daemon.
+
+=== The Daemon
+
+  ./script/tweethose_ctl help
+  ERROR: no command given
+
+  Usage: tweethose <command> <options> -- <application options>
+
+  * where <command> is one of:
+    start         start an instance of the application
+    stop          stop all instances of the application
+    restart       stop all instances and restart them afterwards
+    reload        send a SIGHUP to all instances of the application
+    run           start the application and stay on top
+    zap           set the application to a stopped state
+    status        show status (PID) of application instances
+
+  * and where <options> may contain several of the following:
+
+    -t, --ontop                      Stay on top (does not daemonize)
+    -f, --force                      Force operation
+    -n, --no_wait                    Do not wait for processes to stop
+
+  Common options:
+    -h, --help                       Show this message
+        --version                    Show version
+
+== Configuration
+
+=== Twitter credentials
+
+To connect to Twitter you need to use a set of Twitter credentials. These can be put into the file +config/tweethose.yaml+.
+
+=== What to track
+
+Set it up in the config file. Multiple keywords or sets of keywords can be added to the array. The initial configuration is to look for tweets with the word "Bieber" in it. Mainly because there are a ridiculous amounts of tweets around Justin Bieber and hence makes for a good test case.
+
+  TweetHose::Config.track_keywords = Array['bieber']
+
+=== Callbacks
+
+Configuration is done in +config/initializers/tweethose.rb+. An example config is provided when the generator runs. As an example let's look at the callback that is run when a new tweet arrives. It looks like this in the config file:
+
+  TweetHose::Config.on_new_tweet do |status|
+ 	puts "new tweet received #{status.text} - #{status.created_at}"
+  end
+
+TweetHose calls the block provided with the incoming tweet. Then it's up to the app to do what it wants with it.
+
+== Credits
+
+This code stands on the shoulder of giants. The following gems/projects have been used as starting point and reference. Thanks!
+
+* TweetStream - https://github.com/intridea/tweetstream/
+* Daemon Generator - https://github.com/dougal/daemon_generator
+* Delayed Job - https://github.com/collectiveidea/delayed_job
+* Daemons - http://daemons.rubyforge.org/
+
+== ToDo
+
+* Tests!
+* Add a Rake task that starts the daemon script/worker
+* Move away from basic authentication for Twitter
+
+=== Done
+* Make a generator that generates the daemon script
+* Add an initializer
+* Use config options in initializer to control what code get's called when a new tweet arrives
+* use config options to control keywords
+
+---
+
+This project rocks and uses MIT-LICENSE.

@@ -1,0 +1,15 @@
+require 'tweethose'
+
+TweetHose::Config.track_keywords = Array['bieber']
+
+TweetHose::Config.on_new_tweet do |status|
+	puts "new tweet received #{status.text} - #{status.created_at}"
+end
+
+TweetHose::Config.on_delete_tweet do |status_id|
+	puts "Delete tweet #{status_id}"
+end
+
+TweetHose::Config.on_error do |message|
+	puts "Error received from Twitter #{message}"
+end

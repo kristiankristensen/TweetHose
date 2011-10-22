@@ -1,0 +1,25 @@
+#!/usr/bin/env ruby
+
+# You might want to change this
+ENV["RAILS_ENV"] ||= "development"
+
+require File.dirname(__FILE__) + "/../config/application"
+Rails.application.require_environment!
+
+Rails.logger.auto_flushing = true
+
+require 'rubygems'
+require 'tweethose'
+require 'yaml'
+
+config = YAML.load_file(File.dirname(__FILE__) + "/../config/tweethose.yaml")
+
+$running = true
+Signal.trap("TERM") do 
+  $running = false
+end
+
+while($running) do
+  work = TweetHose::Worker.new(config)
+  work.run
+end

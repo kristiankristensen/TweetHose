@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+require 'rubygems'
+require "daemons"
+require 'yaml'
+require 'erb'
+
+require "active_support/core_ext/object"
+require "active_support/core_ext/hash"
+
+options = YAML.load(
+  ERB.new(
+    IO.read(
+      File.dirname(__FILE__) + "/../config/tweethose.yaml"
+  )).result).with_indifferent_access
+    
+options[:dir_mode] = options[:dir_mode].to_sym
+
+Daemons.run File.dirname(__FILE__) + "/tweethose", options
